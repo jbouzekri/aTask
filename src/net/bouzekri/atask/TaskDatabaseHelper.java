@@ -10,12 +10,14 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DATABASE_NAME = "atask";
 	
-    private static final String TASK_TABLE_NAME = "task";
+    public static final String TASK_TABLE_NAME = "task";
+    public static final String TASK_TABLE_TITLE = "title";
+    public static final String TASK_TABLE_CONTENT = "content";
     
     private static final String TASK_TABLE_CREATE =
-                "CREATE TABLE " + TASK_TABLE_NAME + " (" +
-                "title TEXT, " +
-                "content TEXT);";
+                "CREATE TABLE IF NOT EXISTS " + TASK_TABLE_NAME + " (" +
+                TASK_TABLE_TITLE + " TEXT, " +
+                TASK_TABLE_CONTENT + " TEXT);";
 
     TaskDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,9 +28,8 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(TASK_TABLE_CREATE);
     }
 
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onCreate(db);
+    }
 }

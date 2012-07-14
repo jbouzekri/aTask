@@ -46,7 +46,7 @@ public class ATaskActivity extends Activity {
                 if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(this, getString(R.string.canceled_task), Toast.LENGTH_SHORT).show();
                 } else {
-                	Toast.makeText(this, "other", Toast.LENGTH_SHORT).show();
+                	Toast.makeText(this, getString(R.string.saved_task)+" "+data.getLongExtra("affectedColumnId", 0), Toast.LENGTH_SHORT).show();
                 }
             default:
                 break;
