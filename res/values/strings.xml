@@ -4,5 +4,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_atask">ATaskActivity</string>
-
+    <string name="next_task">Next Tasks</string>
+    <string name="new_task">New</string>
+    <string name="new_task_title">New Task</string>
+    <string name="new_task_form_title_label">Title :</string>
+    <string name="new_task_form_text_label">Text :</string>
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="canceled_task">Canceled</string>
 </resources>
