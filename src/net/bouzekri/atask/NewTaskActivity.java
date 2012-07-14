@@ -7,9 +7,14 @@ import android.widget.Toast;
 
 public class NewTaskActivity extends Activity {
 
+	private TaskDatabaseHelper taskDBHelper;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        setTaskDBHelper(new TaskDatabaseHelper(this));
+        
         setContentView(R.layout.new_task);
     }
     
@@ -19,5 +24,13 @@ public class NewTaskActivity extends Activity {
     
     public void saveAction(View v) {
         Toast.makeText(this, "Save Action.", Toast.LENGTH_SHORT).show();
+    }
+
+    public TaskDatabaseHelper getTaskDBHelper() {
+        return taskDBHelper;
+    }
+
+    public void setTaskDBHelper(TaskDatabaseHelper taskDBHelper) {
+        this.taskDBHelper = taskDBHelper;
     }
 }
