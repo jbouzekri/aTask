@@ -9,14 +9,18 @@
         android:layout_height="wrap_content"
         android:text="@string/next_task" />
 
-    <LinearLayout
-        android:id="@+id/next_task"
-        android:layout_width="match_parent"
+    <ListView
+        android:id="@+id/next_task_list"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/next_task_title" >
+    </ListView>
+    
+    <TextView 
+        android:id="@+id/no_task" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
         android:layout_below="@+id/next_task_title"
-        android:orientation="vertical" >
-
-    </LinearLayout>
+        android:text="@string/no_task" />
     
 </RelativeLayout>

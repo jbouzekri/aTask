@@ -13,5 +13,6 @@
     <string name="cancel_button">Cancel</string>
     <string name="canceled_task">Canceled</string>
     <string name="saved_task">Saved</string>
+    <string name="no_task">No task</string>
     
 </resources>
