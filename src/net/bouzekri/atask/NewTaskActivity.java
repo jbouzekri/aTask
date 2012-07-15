@@ -1,5 +1,6 @@
 package net.bouzekri.atask;
 
+import net.bouzekri.atask.helper.TaskDatabaseHelper;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;

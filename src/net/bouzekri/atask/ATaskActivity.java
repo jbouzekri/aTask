@@ -3,6 +3,10 @@ package net.bouzekri.atask;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bouzekri.atask.adapter.TaskListAdapter;
+import net.bouzekri.atask.helper.TaskDatabaseHelper;
+import net.bouzekri.atask.model.Task;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;

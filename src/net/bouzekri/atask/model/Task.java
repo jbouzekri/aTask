@@ -1,4 +1,4 @@
-package net.bouzekri.atask;
+package net.bouzekri.atask.model;
 
 public class Task {
     private int id;

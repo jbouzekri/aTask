@@ -1,6 +1,11 @@
-package net.bouzekri.atask;
+package net.bouzekri.atask.adapter;
 
 import java.util.List;
+
+import net.bouzekri.atask.R;
+import net.bouzekri.atask.R.id;
+import net.bouzekri.atask.R.layout;
+import net.bouzekri.atask.model.Task;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package net.bouzekri.atask;
+package net.bouzekri.atask.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +19,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper {
                 TASK_TABLE_TITLE + " TEXT, " +
                 TASK_TABLE_CONTENT + " TEXT);";
 
-    TaskDatabaseHelper(Context context) {
+    public TaskDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
