@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +48,8 @@ public class ATaskActivity extends Activity implements OnItemClickListener {
         adapter = new TaskListAdapter(getApplicationContext());
         adapter.setListItems(mTasks);
         mTasksList.setAdapter(adapter);
+        
+        registerForContextMenu(mTasksList);
     }
     
     @Override
@@ -53,6 +57,44 @@ public class ATaskActivity extends Activity implements OnItemClickListener {
         Intent editTask = new Intent(this, NewTaskActivity.class);
         editTask.putExtra("Task", mTasks.get(position));
         startActivityForResult(editTask, TASK_FORM);
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+      if (v.getId() == R.id.next_task_list) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        menu.setHeaderTitle(Integer.toString(mTasks.get(info.position).getId()));
+        String[] menuItems = getResources().getStringArray(R.array.select_menu);
+        for (int i = 0; i < menuItems.length; i++) {
+          menu.add(Menu.NONE, i, i, menuItems[i]);
+        }
+      }
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+      int menuItemIndex = item.getItemId();
+      switch (menuItemIndex) {
+        case 0:
+            Intent editTask = new Intent(this, NewTaskActivity.class);
+            editTask.putExtra("Task", mTasks.get(info.position));
+            startActivityForResult(editTask, TASK_FORM);
+            break;
+            
+        case 1:
+            Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+            break;
+            
+        case 2:
+            getTaskDBHelper().getWritableDatabase().delete(TaskDatabaseHelper.TABLE_NAME, TaskDatabaseHelper.COLUMN_ID+"=?", new String[] { Integer.toString(mTasks.get(info.position).getId()) });
+            mTasks.remove(info.position);
+            adapter.setListItems(mTasks);
+            adapter.notifyDataSetChanged();
+            break;
+      }
+      
+      return true;
     }
 
     @Override
