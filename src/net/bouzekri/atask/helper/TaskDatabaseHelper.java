@@ -10,14 +10,16 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DATABASE_NAME = "atask";
 	
-    public static final String TASK_TABLE_NAME = "task";
-    public static final String TASK_TABLE_TITLE = "title";
-    public static final String TASK_TABLE_CONTENT = "content";
+	public static final String TABLE_NAME = "task";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_CONTENT = "content";
     
     private static final String TASK_TABLE_CREATE =
-                "CREATE TABLE IF NOT EXISTS " + TASK_TABLE_NAME + " (" +
-                TASK_TABLE_TITLE + " TEXT, " +
-                TASK_TABLE_CONTENT + " TEXT);";
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_TITLE + " TEXT, " +
+                COLUMN_CONTENT + " TEXT);";
 
     public TaskDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

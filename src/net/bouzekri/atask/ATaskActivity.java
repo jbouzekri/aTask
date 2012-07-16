@@ -14,10 +14,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ATaskActivity extends Activity {
+public class ATaskActivity extends Activity implements OnItemClickListener {
 
 	public static final int TASK_FORM = 1;
 	
@@ -37,11 +40,19 @@ public class ATaskActivity extends Activity {
         
         mTasksList = (ListView) findViewById(R.id.next_task_list);
         mTasksList.setEmptyView(findViewById(R.id.no_task));
+        mTasksList.setOnItemClickListener(this);
         mTasks = loadNextTasks();
         
         adapter = new TaskListAdapter(getApplicationContext());
         adapter.setListItems(mTasks);
         mTasksList.setAdapter(adapter);
+    }
+    
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent editTask = new Intent(this, NewTaskActivity.class);
+        editTask.putExtra("Task", mTasks.get(position));
+        startActivityForResult(editTask, TASK_FORM);
     }
 
     @Override
@@ -89,20 +100,21 @@ public class ATaskActivity extends Activity {
     }
     
     public List<Task> loadNextTasks() {
-    	List<Task> tasks = new ArrayList<Task>();
-    	
-    	SQLiteDatabase sqliteDatabase = getTaskDBHelper().getReadableDatabase();
-    	Cursor cursor = sqliteDatabase.query(TaskDatabaseHelper.TASK_TABLE_NAME, 
-    										 new String[] {TaskDatabaseHelper.TASK_TABLE_TITLE, TaskDatabaseHelper.TASK_TABLE_CONTENT}, 
-										 	null, null, null, null, null);
-    	if(cursor.moveToFirst())
+        List<Task> tasks = new ArrayList<Task>();
+        
+        SQLiteDatabase sqliteDatabase = getTaskDBHelper().getReadableDatabase();
+        Cursor cursor = sqliteDatabase.query(TaskDatabaseHelper.TABLE_NAME, 
+                                             new String[] {TaskDatabaseHelper.COLUMN_ID,TaskDatabaseHelper.COLUMN_TITLE, TaskDatabaseHelper.COLUMN_CONTENT}, 
+                                             null, null, null, null, null);
+        if(cursor.moveToFirst())
         {
-    		Task newTask;
+            Task newTask;
             do
             {
-            	newTask = new Task();
-                newTask.setTitle(cursor.getString(0));
-                newTask.setContent(cursor.getString(1));
+                newTask = new Task();
+                newTask.setId(cursor.getInt(0));
+                newTask.setTitle(cursor.getString(1));
+                newTask.setContent(cursor.getString(2));
                 tasks.add(newTask);
             } while (cursor.moveToNext());
             if(cursor != null && !cursor.isClosed())
