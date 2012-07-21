@@ -1,16 +1,12 @@
 package net.bouzekri.atask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.bouzekri.atask.adapter.TaskListAdapter;
 import net.bouzekri.atask.helper.TaskDatabaseHelper;
 import net.bouzekri.atask.model.Task;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -22,14 +18,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ATaskActivity extends Activity implements OnItemClickListener {
+public class ATaskActivity extends GeneralActivity implements OnItemClickListener {
 
-	public static final int TASK_FORM = 1;
+	public static final int TASK_FORM        = 1;
+	public static final int TASK_SELECT_LIST = 2;
 	
 	private ListView mTasksList;
 	private List<Task> mTasks;
 	
-	private TaskDatabaseHelper taskDBHelper;
 	private TaskListAdapter adapter;
 	
     @Override
@@ -99,10 +95,10 @@ public class ATaskActivity extends Activity implements OnItemClickListener {
 
     @Override
     public void onResume() {
-    	super.onResume();
-    	mTasks = loadNextTasks();
-    	adapter.setListItems(mTasks);
-    	adapter.notifyDataSetChanged();
+        super.onResume();
+        mTasks = loadNextTasks();
+        adapter.setListItems(mTasks);
+        adapter.notifyDataSetChanged();
     }
     
     @Override
@@ -119,7 +115,12 @@ public class ATaskActivity extends Activity implements OnItemClickListener {
                 Intent newTask = new Intent(this, NewTaskActivity.class);
                 startActivityForResult(newTask, TASK_FORM);
                 return true;
-                
+            
+            case R.id.delete_task:
+                Intent deleteTasks = new Intent(this, SelectTaskActivity.class);
+                startActivityForResult(deleteTasks, TASK_SELECT_LIST);
+                return true;
+            
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -139,38 +140,5 @@ public class ATaskActivity extends Activity implements OnItemClickListener {
             default:
                 break;
         }
-    }
-    
-    public List<Task> loadNextTasks() {
-        List<Task> tasks = new ArrayList<Task>();
-        
-        SQLiteDatabase sqliteDatabase = getTaskDBHelper().getReadableDatabase();
-        Cursor cursor = sqliteDatabase.query(TaskDatabaseHelper.TABLE_NAME, 
-                                             new String[] {TaskDatabaseHelper.COLUMN_ID,TaskDatabaseHelper.COLUMN_TITLE, TaskDatabaseHelper.COLUMN_CONTENT}, 
-                                             null, null, null, null, null);
-        if(cursor.moveToFirst())
-        {
-            Task newTask;
-            do
-            {
-                newTask = new Task();
-                newTask.setId(cursor.getInt(0));
-                newTask.setTitle(cursor.getString(1));
-                newTask.setContent(cursor.getString(2));
-                tasks.add(newTask);
-            } while (cursor.moveToNext());
-            if(cursor != null && !cursor.isClosed())
-                cursor.close();
-        }
-    	
-    	return tasks;
-    }
-    
-    public TaskDatabaseHelper getTaskDBHelper() {
-        return taskDBHelper;
-    }
-
-    public void setTaskDBHelper(TaskDatabaseHelper taskDBHelper) {
-        this.taskDBHelper = taskDBHelper;
     }
 }

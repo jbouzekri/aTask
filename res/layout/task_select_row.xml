@@ -1,0 +1,17 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:descendantFocusability="blocksDescendants" >
+        
+        <TextView
+            android:id="@+id/task_select_row_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+        <CheckBox 
+            android:id="@+id/task_select_row_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+</LinearLayout>

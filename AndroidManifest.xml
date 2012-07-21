@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
         <activity 
+            android:name=".SelectTaskActivity" 
+            android:label="@string/select_task">
+        </activity>
+        <activity 
             android:name=".NewTaskActivity" 
             android:label="@string/new_task_title">
         </activity>

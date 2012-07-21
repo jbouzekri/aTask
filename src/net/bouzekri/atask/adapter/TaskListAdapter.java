@@ -3,8 +3,6 @@ package net.bouzekri.atask.adapter;
 import java.util.List;
 
 import net.bouzekri.atask.R;
-import net.bouzekri.atask.R.id;
-import net.bouzekri.atask.R.layout;
 import net.bouzekri.atask.model.Task;
 
 import android.content.Context;
@@ -12,15 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class TaskListAdapter extends BaseAdapter {
 
+	public static final int NORMAL_LIST = 1;
+	public static final int SELECT_LIST = 2;
+	
 	private LayoutInflater mInflater;
 	private List<Task> mTasks;
+	private int type;
 	
 	public TaskListAdapter(Context context) {
 		mInflater = LayoutInflater.from(context);
+		this.type = TaskListAdapter.NORMAL_LIST;
+	}
+	
+	public TaskListAdapter(Context context, int type) {
+		mInflater = LayoutInflater.from(context);
+		this.type = type;
 	}
 	
 	@Override
@@ -40,6 +49,37 @@ public class TaskListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		switch (this.type) {
+			case TaskListAdapter.SELECT_LIST:
+				convertView = this.getSelectableView(position, convertView, parent);
+				break;
+				
+			default:
+				convertView = this.getNormalView(position, convertView, parent);
+				break;
+		}
+		
+		return convertView;
+	}
+	
+	public View getSelectableView(int position, View convertView, ViewGroup parent) {
+		AppViewHolder holder;
+		if (convertView == null) {
+			convertView = mInflater.inflate(R.layout.task_select_row, null);
+			
+			holder = new AppViewHolder();
+			holder.mTitle = (TextView) convertView.findViewById(R.id.task_select_row_title);
+			holder.mCheckbox = (CheckBox) convertView.findViewById(R.id.task_select_row_checkbox);
+			convertView.setTag(holder);
+		} else {
+			holder = (AppViewHolder) convertView.getTag();
+		}
+		holder.setTitle(mTasks.get(position).getTitle());
+		
+		return convertView;
+	}
+	
+	public View getNormalView(int position, View convertView, ViewGroup parent) {
 		AppViewHolder holder;
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.task_row, null);
@@ -51,6 +91,7 @@ public class TaskListAdapter extends BaseAdapter {
 			holder = (AppViewHolder) convertView.getTag();
 		}
 		holder.setTitle(mTasks.get(position).getTitle());
+		
 		return convertView;
 	}
 
@@ -60,9 +101,14 @@ public class TaskListAdapter extends BaseAdapter {
 	
 	public class AppViewHolder {
 		private TextView mTitle;
+		private CheckBox mCheckbox;
 		
 		public void setTitle(String title) {
 			mTitle.setText(title);
+		}
+
+		public CheckBox getCheckBox() {
+			return this.mCheckbox;
 		}
 	}
 }

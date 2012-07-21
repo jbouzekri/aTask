@@ -8,7 +8,8 @@ public class Task implements Serializable {
 	private int id;
     private String title;
     private String content;
-
+    private boolean checked = false;
+    
     public Task() {
     }
     
@@ -46,6 +47,14 @@ public class Task implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+	public void toggleChecked() {
+        checked = !checked ;
+    }
+
+	public boolean isChecked() {
+        return checked;
     }
     
 }

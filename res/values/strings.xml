@@ -13,7 +13,11 @@
     <string name="cancel_button">Cancel</string>
     <string name="canceled_task">Canceled</string>
     <string name="saved_task">Saved</string>
+    <string name="delete_task">Delete</string>
     <string name="no_task">No task</string>
+    <string name="select_task">Select Tasks</string>
+    <string name="delete_selected_tasks">Delete</string>
+    <string name="done_selected_tasks">Done</string>
     <string-array name="select_menu">
         <item>Edit</item>
         <item>Done</item>

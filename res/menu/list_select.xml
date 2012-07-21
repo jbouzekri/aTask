@@ -2,14 +2,8 @@
     <item android:id="@+id/new_task" 
           android:title="@string/new_task" 
           android:orderInCategory="1" />
-    
-    <item android:id="@+id/delete_task" 
-          android:title="@string/delete_task" 
-          android:orderInCategory="2" />
 
     <item android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
-    
+        android:orderInCategory="100" />
 </menu>
