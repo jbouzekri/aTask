@@ -47,7 +47,8 @@ public class SelectTaskActivity extends GeneralActivity implements OnItemClickLi
                 remainingTasks.add(task);
             }
         }
-        adapter.setListItems(remainingTasks);
+        mTasks = remainingTasks;
+        adapter.setListItems(mTasks);
         adapter.notifyDataSetChanged();
     }
     
