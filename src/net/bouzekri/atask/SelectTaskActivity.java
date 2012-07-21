@@ -1,5 +1,6 @@
 package net.bouzekri.atask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.bouzekri.atask.adapter.TaskListAdapter;
@@ -38,7 +39,16 @@ public class SelectTaskActivity extends GeneralActivity implements OnItemClickLi
     }
     
     public void deleteSelectedTasks(View v) {
-    	
+        List<Task> remainingTasks = new ArrayList<Task>();
+        for (Task task : mTasks) {
+            if (task.isChecked()) {
+                getTaskDBHelper().getWritableDatabase().delete(TaskDatabaseHelper.TABLE_NAME, TaskDatabaseHelper.COLUMN_ID+"=?", new String[] { Integer.toString(task.getId()) });
+            } else {
+                remainingTasks.add(task);
+            }
+        }
+        adapter.setListItems(remainingTasks);
+        adapter.notifyDataSetChanged();
     }
     
     public void doneSelectedTasks(View v) {
@@ -47,7 +57,6 @@ public class SelectTaskActivity extends GeneralActivity implements OnItemClickLi
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View item, int position, long id) {
-		Toast.makeText(this, "clicked "+position, Toast.LENGTH_SHORT).show();
         Task selectedTask = (Task) adapter.getItem( position );  
         selectedTask.toggleChecked();
         AppViewHolder viewHolder = (AppViewHolder) item.getTag();  
