@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class SelectTaskActivity extends GeneralActivity implements OnItemClickListener {
 
@@ -46,6 +47,7 @@ public class SelectTaskActivity extends GeneralActivity implements OnItemClickLi
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View item, int position, long id) {
+		Toast.makeText(this, "clicked "+position, Toast.LENGTH_SHORT).show();
         Task selectedTask = (Task) adapter.getItem( position );  
         selectedTask.toggleChecked();
         AppViewHolder viewHolder = (AppViewHolder) item.getTag();  

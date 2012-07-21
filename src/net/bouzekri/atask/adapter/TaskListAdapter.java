@@ -63,17 +63,26 @@ public class TaskListAdapter extends BaseAdapter {
 	}
 	
 	public View getSelectableView(int position, View convertView, ViewGroup parent) {
-		AppViewHolder holder;
-		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.task_select_row, null);
-			
-			holder = new AppViewHolder();
-			holder.mTitle = (TextView) convertView.findViewById(R.id.task_select_row_title);
-			holder.mCheckbox = (CheckBox) convertView.findViewById(R.id.task_select_row_checkbox);
+		Task clickedTask = (Task) this.getItem( position );
+        AppViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.task_select_row, null);
+
+            holder = new AppViewHolder();
+            holder.mTitle = (TextView) convertView.findViewById(R.id.task_select_row_title);
+            holder.mCheckbox = (CheckBox) convertView.findViewById(R.id.task_select_row_checkbox);
+            holder.mCheckbox.setOnClickListener( new View.OnClickListener() {  
+                public void onClick(View v) {
+                    CheckBox cb = (CheckBox) v ;
+                    Task clickedTask = (Task) cb.getTag();
+                    clickedTask.setChecked( cb.isChecked() );
+		          }  
+	        }); 
 			convertView.setTag(holder);
 		} else {
 			holder = (AppViewHolder) convertView.getTag();
 		}
+        holder.mCheckbox.setTag( clickedTask );
 		holder.setTitle(mTasks.get(position).getTitle());
 		
 		return convertView;

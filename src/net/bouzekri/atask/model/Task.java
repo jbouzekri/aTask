@@ -49,12 +49,15 @@ public class Task implements Serializable {
         this.content = content;
     }
 
-	public void toggleChecked() {
+    public void setChecked(boolean checked) {
+        this.checked = checked ;
+    }
+
+    public void toggleChecked() {
         checked = !checked ;
     }
 
-	public boolean isChecked() {
+    public boolean isChecked() {
         return checked;
     }
-    
 }
